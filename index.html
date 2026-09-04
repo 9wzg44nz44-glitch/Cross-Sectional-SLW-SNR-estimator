@@ -1,151 +1,113 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.6">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
-  </style>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>SLW Simulator: Layered Media (Air-Steel-Seawater-Space)</title>
+ <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+ <style>
+ body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f9; }
+ h1, h2 { color: #1a3c6e; }
+ .container { max-width: 1200px; margin: auto; }
+ canvas { background: white; border: 1px solid #ddd; margin: 15px 0; }
+ .slider-container { margin: 15px 0; }
+ label { display: inline-block; width: 280px; }
+ </style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="en"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;title&gt;SLW Simulator: Layered Media (Air-Steel-Seawater-Space)&lt;/title&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"&gt;&lt;/script&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>body { font-family: Arial, sans-serif; margin: 20px; background: #f4f4f9; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>h1, h2 { color: #1a3c6e; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.container { max-width: 1200px; margin: auto; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>canvas { background: white; border: 1px solid #ddd; margin: 15px 0; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>.slider-container { margin: 15px 0; }</p>
-<p class="p1"><span class="Apple-converted-space">        </span>label { display: inline-block; width: 280px; }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p1">&lt;div class="container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;h1&gt;SLW Propagation Simulator: Air → Steel → Seawater → Space&lt;/h1&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;p&gt;&lt;strong&gt;Scenario:&lt;/strong&gt; Transmitter inside 33 ft air-filled steel cylinder (3" walls) submerged in seawater. Signal propagates through layers with minimal SLW losses.&lt;/p&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="slider-container"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;Transmit Current (A): &lt;span id="I_val"&gt;5&lt;/span&gt;&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="range" id="I" min="0.1" max="10" step="0.1" value="5" oninput="updateSim()"&gt;</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;Frequency (MHz): &lt;span id="f_val"&gt;100&lt;/span&gt;&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="range" id="f" min="1" max="1000" step="1" value="100" oninput="updateSim()"&gt;</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;Seawater Path (km): &lt;span id="sw_val"&gt;1&lt;/span&gt;&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="range" id="sw" min="0" max="50" step="0.1" value="1" oninput="updateSim()"&gt;</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;label&gt;Distance to Detector (km): &lt;span id="d_val"&gt;100&lt;/span&gt;&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="range" id="d" min="0.1" max="40000" step="0.1" value="100" oninput="updateSim()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;canvas id="plot" width="1000" height="500"&gt;&lt;/canvas&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2&gt;Results&lt;/h2&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div id="results" style="background:#fff; padding:15px; border:1px solid #ccc;"&gt;&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button onclick="updateSim()"&gt;Update Simulation&lt;/button&gt;</p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;script&gt;</p>
-<p class="p1">// Constants &amp; Models</p>
-<p class="p1">const c = 3e8; // m/s</p>
-<p class="p1">const mu0 = 4e-7 * Math.PI;</p>
-<p class="p2"><br></p>
-<p class="p1">// Simple SLW attenuation (very low for these models)</p>
-<p class="p1">function attenFactor(media, dist, freq) {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>if (media === 'steel' || media === 'seawater') return 0.95; // near free-space for SLW</p>
-<p class="p1"><span class="Apple-converted-space">    </span>return 1.0;</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">// Main update function</p>
-<p class="p1">function updateSim() {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const I = parseFloat(document.getElementById('I').value);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const f = parseFloat(document.getElementById('f').value) * 1e6; // Hz</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const sw_km = parseFloat(document.getElementById('sw').value);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const total_km = parseFloat(document.getElementById('d').value);</p>
-<p class="p2"><span class="Apple-converted-space">    </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('I_val').textContent = I.toFixed(1);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('f_val').textContent = (f/1e6).toFixed(0);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('sw_val').textContent = sw_km.toFixed(1);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('d_val').textContent = total_km.toFixed(0);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>// Layer distances (meters)</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const d_air1 = 10; <span class="Apple-converted-space">          </span>// 33 ft inside</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const d_steel = 0.0762;<span class="Apple-converted-space">      </span>// 3 inches</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const d_sea = sw_km * 1000;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const d_air2 = Math.max(0, total_km * 1000 - d_air1 - d_steel - d_sea);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>const r = total_km * 1000; // total range for 1/r scaling</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>// Field amplitudes (simplified from Zimmerman/Hively scaling)</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const A0 = I * 1e-6; // base scaling</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const Az_zim = A0 / (r + 1);<span class="Apple-converted-space">                    </span>// ∝ 1/r</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const Ez_zim = A0 / Math.pow(r + 1, 2);<span class="Apple-converted-space">        </span>// ∝ 1/r²</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const Ez_hiv = Az_zim * 0.8;<span class="Apple-converted-space">                    </span>// Hively est.</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>// Detector currents (approximate)</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const I_plasma = Az_zim * 420000 * 1e6;<span class="Apple-converted-space">        </span>// Zimmerman plasma ~420 kA/(Wb/m)</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const I_bifilar = Ez_hiv * 500; <span class="Apple-converted-space">                </span>// Hively bifilar est.</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>// SNR (example with NF)</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const txPower_dBm = 20;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const NF = 8;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const BW = 10000;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const noise_dBm = -174 + 10*Math.log10(BW) + NF;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const snr_zim = txPower_dBm - 20*Math.log10(r/1000) - noise_dBm; // rough</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const snr_hiv = snr_zim + 3; // slight advantage est.</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>// Update results</p>
-<p class="p1"><span class="Apple-converted-space">    </span>document.getElementById('results').innerHTML = `</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;strong&gt;Total Range:&lt;/strong&gt; ${total_km.toFixed(0)} km&lt;br&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;strong&gt;Seawater Path:&lt;/strong&gt; ${sw_km.toFixed(1)} km&lt;br&gt;&lt;br&gt;</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;strong&gt;Zimmerman:&lt;/strong&gt;&lt;br&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>A_z ≈ ${Az_zim.toExponential(2)} Wb/m&lt;br&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>E_z ≈ ${Ez_zim.toExponential(2)} V/m&lt;br&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>Plasma Detector Current ≈ ${I_plasma.toFixed(2)} μA&lt;br&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>SNR ≈ ${snr_zim.toFixed(1)} dB&lt;br&gt;&lt;br&gt;</p>
-<p class="p2"><span class="Apple-converted-space">        </span></p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;strong&gt;Hively SLW:&lt;/strong&gt;&lt;br&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>Longitudinal E ≈ ${Ez_hiv.toExponential(2)} V/m&lt;br&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>Bifilar Coil Output ≈ ${I_bifilar.toFixed(2)} μA&lt;br&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>SNR ≈ ${snr_hiv.toFixed(1)} dB</p>
-<p class="p1"><span class="Apple-converted-space">    </span>`;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>// Plot (placeholder - expand with real Chart.js data)</p>
-<p class="p1"><span class="Apple-converted-space">    </span>const ctx = document.getElementById('plot').getContext('2d');</p>
-<p class="p1"><span class="Apple-converted-space">    </span>if (window.myChart) window.myChart.destroy();</p>
-<p class="p2"><span class="Apple-converted-space">    </span></p>
-<p class="p1"><span class="Apple-converted-space">    </span>window.myChart = new Chart(ctx, {</p>
-<p class="p1"><span class="Apple-converted-space">        </span>type: 'line',</p>
-<p class="p1"><span class="Apple-converted-space">        </span>data: {</p>
-<p class="p1"><span class="Apple-converted-space">            </span>labels: ['Air (33ft)', 'Steel (3")', 'Seawater', 'Space'],</p>
-<p class="p1"><span class="Apple-converted-space">            </span>datasets: [{</p>
-<p class="p1"><span class="Apple-converted-space">                </span>label: 'Zimmerman A_z (1/r)',</p>
-<p class="p1"><span class="Apple-converted-space">                </span>data: [Az_zim*10, Az_zim*5, Az_zim*2, Az_zim],</p>
-<p class="p1"><span class="Apple-converted-space">                </span>borderColor: 'blue'</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}, {</p>
-<p class="p1"><span class="Apple-converted-space">                </span>label: 'Hively SLW E_z',</p>
-<p class="p1"><span class="Apple-converted-space">                </span>data: [Ez_hiv*10, Ez_hiv*5, Ez_hiv*2, Ez_hiv],</p>
-<p class="p1"><span class="Apple-converted-space">                </span>borderColor: 'red'</p>
-<p class="p1"><span class="Apple-converted-space">            </span>}]</p>
-<p class="p1"><span class="Apple-converted-space">        </span>},</p>
-<p class="p1"><span class="Apple-converted-space">        </span>options: { responsive: true, scales: { y: { type: 'logarithmic' } } }</p>
-<p class="p1"><span class="Apple-converted-space">    </span>});</p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">updateSim(); // initial run</p>
-<p class="p1">&lt;/script&gt;</p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+<div class="container">
+ <h1>SLW Propagation Simulator: Air → Steel → Seawater → Space</h1>
+ <p><strong>Scenario:</strong> Transmitter inside 33 ft air-filled steel cylinder (3" walls) submerged in seawater. Signal propagates through layers with minimal SLW losses.</p>
+ <div class="slider-container">
+ <label>Transmit Current (A): <span id="I_val">5</span></label>
+ <input type="range" id="I" min="0.1" max="10" step="0.1" value="5" oninput="updateSim()">
+ <label>Frequency (MHz): <span id="f_val">100</span></label>
+ <input type="range" id="f" min="1" max="1000" step="1" value="100" oninput="updateSim()">
+ <label>Seawater Path (km): <span id="sw_val">1</span></label>
+ <input type="range" id="sw" min="0" max="50" step="0.1" value="1" oninput="updateSim()">
+ <label>Distance to Detector (km): <span id="d_val">100</span></label>
+ <input type="range" id="d" min="0.1" max="40000" step="0.1" value="100" oninput="updateSim()">
+ </div>
+ <canvas id="plot" width="1000" height="500"></canvas>
+ <h2>Results</h2>
+ <div id="results" style="background:#fff; padding:15px; border:1px solid #ccc;"></div>
+ <button onclick="updateSim()">Update Simulation</button>
+</div>
+<script>
+// Constants & Models
+const c = 3e8; // m/s
+const mu0 = 4e-7 * Math.PI;
+// Simple SLW attenuation (very low for these models)
+function attenFactor(media, dist, freq) {
+ if (media === 'steel' || media === 'seawater') return 0.95; // near free-space for SLW
+ return 1.0;
+}
+// Main update function
+function updateSim() {
+ const I = parseFloat(document.getElementById('I').value);
+ const f = parseFloat(document.getElementById('f').value) * 1e6; // Hz
+ const sw_km = parseFloat(document.getElementById('sw').value);
+ const total_km = parseFloat(document.getElementById('d').value);
+ document.getElementById('I_val').textContent = I.toFixed(1);
+ document.getElementById('f_val').textContent = (f/1e6).toFixed(0);
+ document.getElementById('sw_val').textContent = sw_km.toFixed(1);
+ document.getElementById('d_val').textContent = total_km.toFixed(0);
+ // Layer distances (meters)
+ const d_air1 = 10;  // 33 ft inside
+ const d_steel = 0.0762; // 3 inches
+ const d_sea = sw_km * 1000;
+ const d_air2 = Math.max(0, total_km * 1000 - d_air1 - d_steel - d_sea);
+ const r = total_km * 1000; // total range for 1/r scaling
+ // Field amplitudes (simplified from Zimmerman/Hively scaling)
+ const A0 = I * 1e-6; // base scaling
+ const Az_zim = A0 / (r + 1); // ∝ 1/r
+ const Ez_zim = A0 / Math.pow(r + 1, 2); // ∝ 1/r²
+ const Ez_hiv = Az_zim * 0.8; // Hively est.
+ // Detector currents (approximate)
+ const I_plasma = Az_zim * 420000 * 1e6; // Zimmerman plasma ~420 kA/(Wb/m)
+ const I_bifilar = Ez_hiv * 500;  // Hively bifilar est.
+ // SNR (example with NF)
+ const txPower_dBm = 20;
+ const NF = 8;
+ const BW = 10000;
+ const noise_dBm = -174 + 10*Math.log10(BW) + NF;
+ const snr_zim = txPower_dBm - 20*Math.log10(r/1000) - noise_dBm; // rough
+ const snr_hiv = snr_zim + 3; // slight advantage est.
+ // Update results
+ document.getElementById('results').innerHTML = `
+ <strong>Total Range:</strong> ${total_km.toFixed(0)} km<br>
+ <strong>Seawater Path:</strong> ${sw_km.toFixed(1)} km<br><br>
+ <strong>Zimmerman:</strong><br>
+ A_z ≈ ${Az_zim.toExponential(2)} Wb/m<br>
+ E_z ≈ ${Ez_zim.toExponential(2)} V/m<br>
+ Plasma Detector Current ≈ ${I_plasma.toFixed(2)} μA<br>
+ SNR ≈ ${snr_zim.toFixed(1)} dB<br><br>
+ <strong>Hively SLW:</strong><br>
+ Longitudinal E ≈ ${Ez_hiv.toExponential(2)} V/m<br>
+ Bifilar Coil Output ≈ ${I_bifilar.toFixed(2)} μA<br>
+ SNR ≈ ${snr_hiv.toFixed(1)} dB
+ `;
+ // Plot (placeholder - expand with real Chart.js data)
+ const ctx = document.getElementById('plot').getContext('2d');
+ if (window.myChart) window.myChart.destroy();
+ window.myChart = new Chart(ctx, {
+ type: 'line',
+ data: {
+ labels: ['Air (33ft)', 'Steel (3")', 'Seawater', 'Space'],
+ datasets: [{
+ label: 'Zimmerman A_z (1/r)',
+ data: [Az_zim*10, Az_zim*5, Az_zim*2, Az_zim],
+ borderColor: 'blue'
+ }, {
+ label: 'Hively SLW E_z',
+ data: [Ez_hiv*10, Ez_hiv*5, Ez_hiv*2, Ez_hiv],
+ borderColor: 'red'
+ }]
+ },
+ options: { responsive: true, scales: { y: { type: 'logarithmic' } } }
+ });
+}
+updateSim(); // initial run
+</script>
 </body>
 </html>
